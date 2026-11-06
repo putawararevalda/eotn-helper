@@ -1,0 +1,17 @@
+# Ignore PDFs and Word documents per user instruction
+*.pdf
+*.PDF
+*.docx
+*.DOCX
+
+# OS and temporary files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# Scratch files
+scratch/
+*.tmp
+*.log

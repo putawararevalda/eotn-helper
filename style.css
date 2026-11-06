@@ -1,0 +1,1182 @@
+/* ==========================================================================
+   Empires of the North — Solo Companion Stylesheet
+   Theme: Nordic Nautical / Settlement Board Game
+   ========================================================================== */
+
+:root {
+  --bg-deep: #0f172a;
+  --bg-surface: #1e293b;
+  --bg-card: #24344d;
+  --bg-card-hover: #2d4263;
+  --border-color: #3b5278;
+  --border-light: #476694;
+
+  --accent-gold: #f59e0b;
+  --accent-gold-hover: #d97706;
+  --accent-cyan: #38bdf8;
+  --accent-blue: #2563eb;
+  --accent-green: #10b981;
+  --accent-red: #ef4444;
+  --accent-purple: #8b5cf6;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --font-serif: 'Cinzel', Georgia, serif;
+  --font-sans: 'Nunito', system-ui, -apple-system, sans-serif;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+
+.app-header {
+  background: linear-gradient(180deg, #16243b 0%, #0f172a 100%);
+  border-bottom: 2px solid var(--border-color);
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  box-shadow: var(--shadow-md);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.game-logo {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #fbbf24;
+}
+
+.mode-badge {
+  background-color: #0284c7;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 0.2rem 0.5rem;
+  border-radius: 9999px;
+  letter-spacing: 1px;
+}
+
+.header-center {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  background-color: rgba(15, 23, 42, 0.6);
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+}
+
+.scenario-display, .clan-display {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.label {
+  color: var(--text-secondary);
+}
+
+.target-badge {
+  background-color: rgba(245, 158, 11, 0.2);
+  color: var(--accent-gold);
+  border: 1px solid var(--accent-gold);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ==========================================================================
+   BUTTONS & COMMON CONTROLS
+   ========================================================================== */
+
+.btn {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-sm {
+  padding: 0.3rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+.btn-xs {
+  padding: 0.2rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.btn-primary {
+  background-color: var(--accent-blue);
+  color: #fff;
+}
+.btn-primary:hover {
+  background-color: #1d4ed8;
+}
+
+.btn-outline {
+  background-color: transparent;
+  border-color: var(--border-light);
+  color: var(--text-primary);
+}
+.btn-outline:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: var(--text-primary);
+}
+
+.btn-warning {
+  background-color: #b45309;
+  color: #fff;
+}
+.btn-warning:hover {
+  background-color: #92400e;
+}
+
+.btn-success {
+  background-color: var(--accent-green);
+  color: #064e3b;
+  font-weight: 800;
+}
+.btn-success:hover {
+  background-color: #059669;
+  color: #fff;
+}
+
+.btn-danger {
+  background-color: var(--accent-red);
+  color: #fff;
+}
+
+.btn-circle {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 1px solid var(--border-light);
+  cursor: pointer;
+}
+.btn-circle:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-circ-sm {
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 50%;
+  border: 1px solid var(--border-light);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  font-weight: bold;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.1s ease;
+}
+.btn-circ-sm:hover {
+  background-color: var(--accent-cyan);
+  color: #0f172a;
+}
+
+/* ==========================================================================
+   LAYOUT
+   ========================================================================== */
+
+.main-container {
+  flex: 1;
+  padding: 1rem 1.5rem 2rem;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.game-tracker-bar {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 0.85rem 1.25rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 1.25rem;
+}
+
+.bar-title {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+  margin-bottom: 0.35rem;
+}
+
+/* Round Stepper */
+.round-indicator {
+  display: flex;
+  flex-direction: column;
+}
+
+.round-stepper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.round-pip {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background-color: #0f172a;
+  border: 2px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+.round-pip.active {
+  background-color: var(--accent-gold);
+  border-color: #fde047;
+  color: #78350f;
+  transform: scale(1.1);
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.6);
+}
+
+.round-pip.past {
+  background-color: #334155;
+  border-color: #64748b;
+  color: #cbd5e1;
+}
+
+.round-subtext {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+/* Phase Stepper */
+.phase-stepper-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.phase-stepper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.phase-btn {
+  background-color: #0f172a;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.5rem 0.75rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.15s ease;
+}
+
+.phase-btn:hover {
+  background-color: var(--bg-card);
+}
+
+.phase-btn .phase-num {
+  background-color: rgba(255, 255, 255, 0.1);
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.phase-btn .phase-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.phase-btn.active {
+  background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+  border-color: var(--accent-cyan);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
+}
+.phase-btn.active .phase-num {
+  background-color: #fff;
+  color: #1e40af;
+}
+
+/* VP Score Box */
+.vp-score-box {
+  background: linear-gradient(135deg, #78350f 0%, #b45309 100%);
+  border: 2px solid var(--accent-gold);
+  border-radius: var(--radius-md);
+  padding: 0.5rem 1rem;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(180, 83, 9, 0.4);
+}
+
+.vp-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #fde68a;
+}
+
+.vp-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.2rem;
+}
+
+.vp-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  font-family: var(--font-serif);
+  color: #fff;
+  min-width: 2.5rem;
+}
+
+/* ==========================================================================
+   DASHBOARD 2-COLUMN GRID
+   ========================================================================== */
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.column-left, .column-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Card Common */
+.card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.card-header {
+  background-color: rgba(36, 52, 77, 0.4);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.85rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-header h2, .card-header h3 {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+/* ==========================================================================
+   PHASE WORKFLOW CARD
+   ========================================================================== */
+
+.phase-card {
+  border: 1px solid var(--accent-cyan);
+}
+
+.phase-step-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.step-item {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+}
+
+.step-item.highlight {
+  border-color: var(--accent-gold);
+  background-color: rgba(245, 158, 11, 0.1);
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.35rem;
+}
+
+.step-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #f1f5f9;
+}
+
+.step-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* Event Drawer Box */
+.event-roll-box {
+  margin-top: 0.75rem;
+  padding: 0.85rem;
+  background-color: #0f172a;
+  border: 1px dashed var(--border-light);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.event-token-display {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.event-token-circle {
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #b91c1c 0%, #ef4444 100%);
+  border: 2px solid #fecaca;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 800;
+  font-family: var(--font-serif);
+  color: white;
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4);
+}
+
+.event-details {
+  flex: 1;
+}
+
+.event-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #fca5a5;
+}
+
+.event-text {
+  font-size: 0.85rem;
+  color: #e2e8f0;
+  margin-top: 0.2rem;
+}
+
+/* ==========================================================================
+   SCENARIO SPECIAL CARD
+   ========================================================================== */
+
+.scenario-card {
+  border-left: 4px solid var(--accent-gold);
+}
+
+.scenario-card-title .tag {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.scenario-card-title h3 {
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.btn-exhaust {
+  background-color: #065f46;
+  border-color: #34d399;
+  color: #ecfdf5;
+}
+.btn-exhaust.exhausted {
+  background-color: #831843;
+  border-color: #f472b6;
+  color: #fdf2f8;
+}
+
+.scenario-location-effect {
+  background-color: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.scenario-special-widget {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.scenario-action-pill {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   ACTION PAWNS & TILES
+   ========================================================================== */
+
+.pawns-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.pawn-status-box {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pawn-status-box.exhausted {
+  border-color: #dc2626;
+  background-color: rgba(220, 38, 38, 0.15);
+}
+
+.pawn-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pawn-state-tag {
+  font-size: 0.75rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.tile-select {
+  width: 100%;
+  background-color: #0f172a;
+  border: 1px solid var(--border-light);
+  color: white;
+  padding: 0.35rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+}
+
+.tiles-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+}
+
+.tile-item {
+  background-color: #0f172a;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 90px;
+}
+
+.tile-name {
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: var(--accent-gold);
+}
+
+.tile-desc {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  line-height: 1.2;
+  margin: 0.25rem 0;
+}
+
+.tile-side-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.15rem 0.25rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.tile-side-badge.standard {
+  background-color: rgba(56, 189, 248, 0.15);
+  color: var(--accent-cyan);
+  border: 1px solid var(--accent-cyan);
+}
+
+.tile-side-badge.solo-side {
+  background-color: rgba(239, 68, 68, 0.25);
+  color: #f87171;
+  border: 1px solid #ef4444;
+}
+
+.info-tip {
+  font-size: 0.75rem;
+  color: var(--accent-cyan);
+}
+
+/* ==========================================================================
+   RESOURCES SUPPLY BOX
+   ========================================================================== */
+
+.workers-tracker {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.worker-box {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.65rem 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.worker-title {
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.counter-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.goods-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.res-item {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.65rem 0.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.res-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+  margin-bottom: 0.15rem;
+}
+
+.res-name {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.res-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.35rem;
+}
+
+.res-count {
+  font-size: 1.15rem;
+  font-weight: 800;
+  min-width: 1.4rem;
+}
+
+.gold-item {
+  border-color: rgba(245, 158, 11, 0.4);
+}
+.gold-item .res-count {
+  color: var(--accent-gold);
+}
+
+.raze-item {
+  border-color: rgba(239, 68, 68, 0.4);
+}
+.raze-item .res-count {
+  color: #f87171;
+}
+
+.ship-item {
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+/* ==========================================================================
+   EXPEDITION QUEUE
+   ========================================================================== */
+
+.queue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 50px;
+}
+
+.empty-hint {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 0.5rem 0;
+}
+
+.queue-ship-item {
+  background-color: var(--bg-card);
+  border: 1px solid var(--accent-cyan);
+  border-radius: var(--radius-md);
+  padding: 0.65rem 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ship-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ship-index-badge {
+  background-color: var(--accent-blue);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 800;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ship-tags {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.tag-badge {
+  font-size: 0.7rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.tag-badge.distant {
+  background-color: #0369a1;
+  color: white;
+}
+.tag-badge.conquer {
+  background-color: #991b1b;
+  color: white;
+}
+
+.ship-actions {
+  display: flex;
+  gap: 0.35rem;
+}
+
+/* ==========================================================================
+   SCORING QUICK CARD
+   ========================================================================== */
+
+.scoring-teaser {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+}
+
+/* ==========================================================================
+   MODALS
+   ========================================================================== */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-box {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-box.modal-sm {
+  max-width: 440px;
+}
+.modal-box.modal-lg {
+  max-width: 750px;
+}
+
+.modal-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-header h2, .modal-header h3 {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  color: #fff;
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.btn-close:hover {
+  color: #fff;
+}
+
+.modal-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.modal-footer {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+/* Setup Modal Specifics */
+.scenario-selector-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.35rem;
+}
+
+.scenario-choice {
+  background-color: var(--bg-card);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.75rem;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  transition: all 0.15s ease;
+}
+
+.scenario-choice input {
+  margin-top: 0.2rem;
+}
+
+.scenario-choice.active {
+  border-color: var(--accent-gold);
+  background-color: rgba(245, 158, 11, 0.15);
+}
+
+.scenario-choice .desc {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 0.15rem;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  color: #e2e8f0;
+}
+
+.form-control {
+  width: 100%;
+  background-color: #0f172a;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  color: #fff;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  margin-top: 0.35rem;
+}
+
+.setup-checklist {
+  background-color: rgba(15, 23, 42, 0.7);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.85rem;
+  font-size: 0.85rem;
+}
+
+.setup-checklist h4 {
+  color: var(--accent-cyan);
+  margin-bottom: 0.35rem;
+}
+
+.setup-checklist ul {
+  padding-left: 1.25rem;
+}
+
+/* Ship Assign Checkboxes */
+.ship-assign-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  background-color: var(--bg-card);
+  padding: 0.75rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  font-size: 0.9rem;
+}
+
+/* Scoring Calculator Modal Specifics */
+.scoring-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.scoring-field label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+.scoring-field small {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 0.2rem;
+}
+
+.scenario-scoring-box {
+  grid-column: 1 / -1;
+  background-color: rgba(15, 23, 42, 0.7);
+  border: 1px solid var(--accent-gold);
+  border-radius: var(--radius-md);
+  padding: 0.85rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.score-summary-result {
+  background-color: #0f172a;
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.total-score-badge {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.total-score-badge strong {
+  font-size: 2.2rem;
+  font-family: var(--font-serif);
+  color: var(--accent-gold);
+}
+
+.threshold-comparison {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.outcome-banner {
+  margin-top: 0.5rem;
+  font-weight: 800;
+  font-size: 1.1rem;
+  padding: 0.5rem 1.5rem;
+  border-radius: 9999px;
+}
+.outcome-banner.victory {
+  background-color: rgba(16, 185, 129, 0.2);
+  border: 2px solid var(--accent-green);
+  color: #34d399;
+}
+.outcome-banner.defeat {
+  background-color: rgba(239, 68, 68, 0.2);
+  border: 2px solid var(--accent-red);
+  color: #f87171;
+}
+
+/* Rules content */
+.rules-content h3 {
+  font-family: var(--font-serif);
+  color: var(--accent-gold);
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+.rules-content ul {
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.88rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  .game-tracker-bar {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .phase-stepper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .tiles-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .tiles-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .goods-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .scenario-selector-grid, .scoring-grid, .scenario-scoring-box {
+    grid-template-columns: 1fr;
+  }
+}

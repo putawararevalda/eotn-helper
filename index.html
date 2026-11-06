@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Empires of the North — Solo Companion</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-left">
+      <span class="game-logo">⚔️ Empires of the North</span>
+      <span class="mode-badge">SOLO COMPANION</span>
+    </div>
+    <div class="header-center">
+      <div class="scenario-display">
+        <span class="label">Scenario:</span>
+        <strong id="active-scenario-name">Winter is Coming</strong>
+        <span class="target-badge" id="active-scenario-target">Target: 30 VP</span>
+      </div>
+      <div class="clan-display">
+        <span class="label">Clan:</span>
+        <strong id="active-clan-name">The Glenn Clan</strong>
+      </div>
+    </div>
+    <div class="header-right">
+      <button id="btn-quick-rules" class="btn btn-outline btn-sm" title="Quick Rules Reference">📖 Rules</button>
+      <button id="btn-new-game" class="btn btn-warning btn-sm" title="Start a fresh game">🔄 New Game</button>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <!-- TOP STATUS BAR: ROUND, PHASE, SCORING QUICK VIEW -->
+    <section class="game-tracker-bar">
+      <div class="round-indicator">
+        <span class="bar-title">ROUND</span>
+        <div class="round-stepper">
+          <span class="round-pip" data-round="1">1</span>
+          <span class="round-pip" data-round="2">2</span>
+          <span class="round-pip" data-round="3">3</span>
+          <span class="round-pip" data-round="4">4</span>
+        </div>
+        <span class="round-subtext" id="round-status-text">Round 1 of 4</span>
+      </div>
+
+      <div class="phase-stepper-container">
+        <span class="bar-title">PHASE</span>
+        <div class="phase-stepper">
+          <button class="phase-btn" data-phase="LOOKOUT">
+            <span class="phase-num">1</span>
+            <span class="phase-name">Lookout</span>
+          </button>
+          <button class="phase-btn" data-phase="ACTION">
+            <span class="phase-num">2</span>
+            <span class="phase-name">Action</span>
+          </button>
+          <button class="phase-btn" data-phase="EXPEDITION">
+            <span class="phase-num">3</span>
+            <span class="phase-name">Expedition</span>
+          </button>
+          <button class="phase-btn" data-phase="CLEANUP">
+            <span class="phase-num">4</span>
+            <span class="phase-name">Cleanup</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="vp-score-box">
+        <div class="vp-label">CURRENT VP ⭐</div>
+        <div class="vp-controls">
+          <button class="btn-circle btn-sm" id="btn-vp-minus">-1</button>
+          <span class="vp-value" id="vp-display">0</span>
+          <button class="btn-circle btn-sm" id="btn-vp-plus">+1</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN TWO-COLUMN DASHBOARD -->
+    <div class="dashboard-grid">
+      <!-- LEFT COLUMN: ACTIVE PHASE ASSISTANT & SCENARIO MECHANICS -->
+      <div class="column-left">
+        <!-- PHASE WORKFLOW CARD -->
+        <div class="card phase-card" id="phase-card">
+          <div class="card-header">
+            <h2 id="phase-card-title">Phase 1: Lookout Phase</h2>
+            <button id="btn-next-phase" class="btn btn-primary">Next Phase ➔</button>
+          </div>
+          <div class="card-body" id="phase-card-body">
+            <!-- Dynamically populated by JS according to active phase -->
+          </div>
+        </div>
+
+        <!-- SCENARIO SPECIAL CARD & LOCATION -->
+        <div class="card scenario-card" id="scenario-card">
+          <div class="card-header">
+            <div class="scenario-card-title">
+              <span class="tag">Scenario Ability & Location</span>
+              <h3 id="scenario-location-title">Buried Pantry</h3>
+            </div>
+            <div class="location-status">
+              <button id="btn-toggle-location" class="btn btn-sm btn-exhaust">
+                <span id="loc-status-icon">⚪</span> <span id="loc-status-text">Ready</span>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="scenario-location-effect" id="scenario-location-effect">
+              <strong>Action:</strong> Spend 1 Stone 🪨, 1 Wood 🪵, and 1 Fish 🐟 to gain 4 VP ⭐.
+            </div>
+            <div class="scenario-special-widget" id="scenario-special-widget">
+              <!-- Custom controls for Winter/Outpost/Pirates/War -->
+            </div>
+          </div>
+        </div>
+
+        <!-- SOLO ACTION TILES & PAWNS -->
+        <div class="card action-tiles-card">
+          <div class="card-header">
+            <h3>Clan Action Pawns & Action Tiles</h3>
+            <span class="info-tip" title="In solo mode, tiles with pawns flip to Solo side during Cleanup">Solo Tile Flipping Active</span>
+          </div>
+          <div class="card-body">
+            <div class="pawns-row">
+              <div class="pawn-status-box" id="pawn-1-box">
+                <div class="pawn-header">
+                  <strong>Pawn #1</strong>
+                  <span class="pawn-state-tag" id="pawn-1-tag">Available</span>
+                </div>
+                <div class="pawn-actions">
+                  <select id="pawn-1-tile" class="tile-select">
+                    <option value="">-- Choose Tile --</option>
+                    <option value="explore">Explore</option>
+                    <option value="populate">Populate</option>
+                    <option value="construct">Construct</option>
+                    <option value="harvest">Harvest</option>
+                    <option value="sail">Sail</option>
+                  </select>
+                  <button class="btn btn-xs btn-outline" id="btn-pawn-1-exhaust" title="Spend 1 Food to move to adjacent tile and exhaust">1 🍎 Move & Exhaust</button>
+                </div>
+              </div>
+
+              <div class="pawn-status-box" id="pawn-2-box">
+                <div class="pawn-header">
+                  <strong>Pawn #2</strong>
+                  <span class="pawn-state-tag" id="pawn-2-tag">Available</span>
+                </div>
+                <div class="pawn-actions">
+                  <select id="pawn-2-tile" class="tile-select">
+                    <option value="">-- Choose Tile --</option>
+                    <option value="explore">Explore</option>
+                    <option value="populate">Populate</option>
+                    <option value="construct">Construct</option>
+                    <option value="harvest">Harvest</option>
+                    <option value="sail">Sail</option>
+                  </select>
+                  <button class="btn btn-xs btn-outline" id="btn-pawn-2-exhaust" title="Spend 1 Food to move to adjacent tile and exhaust">1 🍎 Move & Exhaust</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- TILES GRID -->
+            <div class="tiles-grid">
+              <div class="tile-item" data-tile="explore">
+                <div class="tile-name">Explore</div>
+                <div class="tile-desc">Draw 1 Clan card</div>
+                <span class="tile-side-badge standard" id="badge-tile-explore">Standard Side</span>
+              </div>
+              <div class="tile-item" data-tile="populate">
+                <div class="tile-name">Populate</div>
+                <div class="tile-desc">+1 Worker to supply</div>
+                <span class="tile-side-badge standard" id="badge-tile-populate">Standard Side</span>
+              </div>
+              <div class="tile-item" data-tile="construct">
+                <div class="tile-name">Construct</div>
+                <div class="tile-desc">Build 1 non-Field for FREE</div>
+                <span class="tile-side-badge standard" id="badge-tile-construct">Standard Side</span>
+              </div>
+              <div class="tile-item" data-tile="harvest">
+                <div class="tile-name">Harvest</div>
+                <div class="tile-desc">Gain goods from 1 Field + upgrades</div>
+                <span class="tile-side-badge standard" id="badge-tile-harvest">Standard Side</span>
+              </div>
+              <div class="tile-item" data-tile="sail">
+                <div class="tile-name">Sail</div>
+                <div class="tile-desc">Place Ship on queue (+Fish / +Raze)</div>
+                <span class="tile-side-badge standard" id="badge-tile-sail">Standard Side</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: RESOURCES, EXPEDITION QUEUE & SCORING -->
+      <div class="column-right">
+        <!-- RESOURCE SUPPLY BOX -->
+        <div class="card resources-card">
+          <div class="card-header">
+            <h3>Player Supply & Goods</h3>
+            <button class="btn btn-xs btn-outline" id="btn-reset-supplies">Reset to Setup</button>
+          </div>
+          <div class="card-body">
+            <!-- WORKERS ROW -->
+            <div class="workers-tracker">
+              <div class="worker-box active-workers">
+                <span class="worker-title">Active Workers 🧑</span>
+                <div class="counter-control">
+                  <button class="btn-circ-sm" onclick="app.updateResource('workers', -1)">-</button>
+                  <span class="res-count" id="count-workers">5</span>
+                  <button class="btn-circ-sm" onclick="app.updateResource('workers', 1)">+</button>
+                </div>
+              </div>
+              <div class="worker-box spent-workers">
+                <span class="worker-title">Spent on Clan Tile 💤</span>
+                <div class="counter-control">
+                  <button class="btn-circ-sm" onclick="app.updateResource('spentWorkers', -1)">-</button>
+                  <span class="res-count" id="count-spentWorkers">0</span>
+                  <button class="btn-circ-sm" onclick="app.updateResource('spentWorkers', 1)">+</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- GOODS GRID -->
+            <div class="goods-grid">
+              <div class="res-item" title="Food - needed to move pawns & activate cards">
+                <div class="res-icon">🍎</div>
+                <div class="res-name">Food</div>
+                <div class="res-controls">
+                  <button class="btn-circ-sm" onclick="app.updateResource('food', -1)">-</button>
+                  <span class="res-count" id="count-food">0</span>
+                  <button class="btn-circ-sm" onclick="app.updateResource('food', 1)">+</button>
+                </div>
+              </div>
+
+              <div class="res-item" title="Wood - building material">
+                <div class="res-icon">🪵</div>
+                <div class="res-name">Wood</div>
+                <div class="res-controls">
+                  <button class="btn-circ-sm" onclick="app.updateResource('wood', -1)">-</button>
+                  <span class="res-count" id="count-wood">0</span>
+                  <button class="btn-circ-sm" onclick="app.updateResource('wood', 1)">+</button>
+                </div>
+              </div>
+
+              <div class="res-item" title="Stone - advanced building material">
+                <div class="res-icon">🪨</div>
+                <div class="res-name">Stone</div>
+                <div class="res-controls">
+                  <button class="btn-circ-sm" onclick="app.updateResource('stone', -1)">-</button>
+                  <span class="res-count" id="count-stone">0</span>
+                  <button class="btn-circ-sm" onclick="app.updateResource('stone', 1)">+</button>
+                </div>
+              </div>
+
+              <div class="res-item" title="Sheep - livestock for actions">
+                <div class="res-icon">🐑</div>
+                <div class="res-name">Sheep</div>
+                <div class="res-controls">
+                  <button class="btn-circ-sm" onclick="app.updateResource('sheep', -1)">-</button>
+                  <span class="res-count" id="count-sheep">0</span>
+                  <button class="btn-circ-sm" onclick="app.updateResource('sheep', 1)">+</button>
+                </div>
+              </div>
+
+              <div class="res-item" title="Fish - provisions for Distant Islands">
+                <div class="res-icon">🐟</div>
+                <div class="res-name">Fish</div>
+                <div class="res-controls">
+                  <button class="btn-circ-sm" onclick="app.updateResource('fish', -1)">-</button>
+                  <span class="res-count" id="count-fish">0</span>
+                  <button class="btn-circ-sm" onclick="app.updateResource('fish', 1)">+</button>
+                </div>
+              </div>
+
+              <div class="res-item gold-item" title="Gold - wild resource substitute (1:1), 1 VP at game end">
+                <div class="res-icon">🪙</div>
+                <div class="res-name">Gold</div>
+                <div class="res-controls">
+                  <button class="btn-circ-sm" onclick="app.updateResource('gold', -1)">-</button>
+                  <span class="res-count" id="count-gold">0</span>
+                  <button class="btn-circ-sm" onclick="app.updateResource('gold', 1)">+</button>
+                </div>
+              </div>
+
+              <div class="res-item raze-item" title="Raze - Conquer islands or Raid cards">
+                <div class="res-icon">🪓</div>
+                <div class="res-name">Raze</div>
+                <div class="res-controls">
+                  <button class="btn-circ-sm" onclick="app.updateResource('raze', -1)">-</button>
+                  <span class="res-count" id="count-raze">0</span>
+                  <button class="btn-circ-sm" onclick="app.updateResource('raze', 1)">+</button>
+                </div>
+              </div>
+
+              <div class="res-item ship-item" title="Ships available in personal supply">
+                <div class="res-icon">⛵</div>
+                <div class="res-name">Ships</div>
+                <div class="res-controls">
+                  <button class="btn-circ-sm" onclick="app.updateResource('ships', -1)">-</button>
+                  <span class="res-count" id="count-ships">2</span>
+                  <button class="btn-circ-sm" onclick="app.updateResource('ships', 1)">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXPEDITION QUEUE CARD -->
+        <div class="card expedition-card">
+          <div class="card-header">
+            <h3>Expedition Board Queue ⛵</h3>
+            <button class="btn btn-xs btn-primary" id="btn-add-ship-to-queue">+ Sail New Ship</button>
+          </div>
+          <div class="card-body">
+            <div id="expedition-queue-container" class="queue-list">
+              <!-- Dynamically populated ships in queue -->
+              <p class="empty-hint">No Ships currently queued on the Expedition Board. Use Sail action to launch an expedition.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- EMPIRE SUMMARY & END-GAME CALCULATOR TRIGGER -->
+        <div class="card scoring-quick-card">
+          <div class="card-header">
+            <h3>End-Game Solo Scoring</h3>
+            <button class="btn btn-success" id="btn-open-scorer">📊 Calculate Final Score</button>
+          </div>
+          <div class="card-body">
+            <p class="scoring-teaser">
+              Play 4 rounds. Reach or exceed your scenario's threshold (<strong id="teaser-threshold">30 VP</strong>) to claim victory!
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL: NEW GAME SETUP -->
+  <div class="modal-overlay" id="modal-setup">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2>⚔️ Start New Solo Game</h2>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label><strong>1. Select Solo Scenario:</strong></label>
+          <div class="scenario-selector-grid">
+            <label class="scenario-choice active" data-scenario="winter">
+              <input type="radio" name="scenario-radio" value="winter" checked>
+              <div class="choice-content">
+                <strong>❄️ Winter is Coming</strong>
+                <span class="desc">Threshold: 30 VP | Harsh food demand</span>
+              </div>
+            </label>
+            <label class="scenario-choice" data-scenario="outpost">
+              <input type="radio" name="scenario-radio" value="outpost">
+              <div class="choice-content">
+                <strong>🏰 Outpost</strong>
+                <span class="desc">Threshold: 40 VP | Building sites limit</span>
+              </div>
+            </label>
+            <label class="scenario-choice" data-scenario="pirates">
+              <input type="radio" name="scenario-radio" value="pirates">
+              <div class="choice-content">
+                <strong>🏴‍☠️ Pirate's Den</strong>
+                <span class="desc">Threshold: 45 VP | Secure the Den costs</span>
+              </div>
+            </label>
+            <label class="scenario-choice" data-scenario="war">
+              <input type="radio" name="scenario-radio" value="war">
+              <div class="choice-content">
+                <strong>⚔️ Kingdom at War</strong>
+                <span class="desc">Threshold: 35 VP | Barbarian Invasions</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label><strong>2. Choose Your Clan:</strong></label>
+          <select id="select-clan" class="form-control">
+            <option value="glenn">The Glenn Clan (Difficulty: 1 - Teamwork & Sets)</option>
+            <option value="ulaf">The Ulaf Clan (Difficulty: 3 - Viking Raids & Ships)</option>
+            <option value="panuk">The Panuk Clan (Difficulty: 3 - Inuit Synergy & Order)</option>
+            <option value="heidel">The Heidel Clan (Difficulty: 5 - Drinking & Feasts)</option>
+            <option value="nanurjuk">The Nanurjuk Clan (Difficulty: 7 - Nomadic Survival)</option>
+            <option value="mackinnon">The Mackinnon Clan (Difficulty: 8 - Wealth & Investment)</option>
+          </select>
+        </div>
+
+        <div class="setup-checklist" id="setup-instructions-box">
+          <!-- Setup changes displayed based on selected scenario -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" id="btn-cancel-setup">Cancel</button>
+        <button class="btn btn-primary" id="btn-confirm-setup">Start Solo Game ➔</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD SHIP TO EXPEDITION -->
+  <div class="modal-overlay" id="modal-ship">
+    <div class="modal-box modal-sm">
+      <div class="modal-header">
+        <h3>Launch Ship to Expedition Queue ⛵</h3>
+      </div>
+      <div class="modal-body">
+        <p>Assign optional provisions and raze tokens right upon launching:</p>
+        <div class="ship-assign-options">
+          <label class="checkbox-container">
+            <input type="checkbox" id="ship-assign-fish">
+            <span class="checkmark"></span>
+            Assign 1 Fish 🐟 <small>(Enables sailing to Distant Islands)</small>
+          </label>
+          <label class="checkbox-container">
+            <input type="checkbox" id="ship-assign-raze">
+            <span class="checkmark"></span>
+            Assign 1 Raze 🪓 <small>(Enables Conquering the Island into your Empire)</small>
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" id="btn-cancel-ship">Cancel</button>
+        <button class="btn btn-primary" id="btn-confirm-ship">Place Ship on Queue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: FINAL SCORING CALCULATOR -->
+  <div class="modal-overlay" id="modal-scorer">
+    <div class="modal-box modal-lg">
+      <div class="modal-header">
+        <h2>📊 Solo Game Final Scoring</h2>
+        <button class="btn-close" id="btn-close-scorer">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="scoring-grid">
+          <!-- Standard Scoring inputs -->
+          <div class="scoring-field">
+            <label>Current Scoreboard VP ⭐:</label>
+            <input type="number" id="calc-board-vp" class="form-control" value="0">
+          </div>
+          <div class="scoring-field">
+            <label>Cards in Empire (1 VP each):</label>
+            <input type="number" id="calc-empire-cards" class="form-control" value="3" title="Basic fields + upgrades + locations + conquered islands">
+            <small>Includes 3 Basic Fields, upgrades & conquered islands</small>
+          </div>
+          <div class="scoring-field">
+            <label>Remaining Unassigned Resources (1 VP / 2 res):</label>
+            <input type="number" id="calc-resources" class="form-control" value="0">
+            <small>Food + Wood + Stone + Sheep + Fish in supply</small>
+          </div>
+          <div class="scoring-field">
+            <label>Remaining Unassigned Gold (1 VP / 1 gold):</label>
+            <input type="number" id="calc-gold" class="form-control" value="0">
+          </div>
+
+          <!-- Scenario Specific Scoring inputs -->
+          <div id="scenario-scoring-fields" class="scenario-scoring-box">
+            <!-- Injected by scenario -->
+          </div>
+        </div>
+
+        <div class="score-summary-result" id="score-summary-result">
+          <div class="total-score-badge">
+            <span>FINAL SCORE:</span>
+            <strong id="final-score-val">0</strong> VP
+          </div>
+          <div class="threshold-comparison" id="threshold-comparison">
+            Target: <span id="summary-target">30</span> VP
+          </div>
+          <div class="outcome-banner" id="outcome-banner">
+            <!-- Victory or Defeat banner -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" id="btn-back-to-game">Back to Game</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: RULES QUICK REFERENCE -->
+  <div class="modal-overlay" id="modal-rules">
+    <div class="modal-box modal-lg rules-modal">
+      <div class="modal-header">
+        <h2>📖 Quick Rules & Clarifications</h2>
+        <button class="btn-close" id="btn-close-rules">&times;</button>
+      </div>
+      <div class="modal-body rules-content">
+        <h3>Solo Mode Core Rules</h3>
+        <ul>
+          <li><strong>Game Length:</strong> Exactly 4 rounds.</li>
+          <li><strong>Lookout Phase Event:</strong> Draw 1 Number Token (1–5) and resolve. If unable to pay cost, lose 2 VP.</li>
+          <li><strong>Scenario Location:</strong> Can be activated during the Action Phase. If it's an Action, exhaust it (cover with First Player marker). It does <em>not</em> count for end-of-game VP.</li>
+          <li><strong>Solo Action Tiles:</strong> Tiles with pawns flip to the Solo side (higher cost) during Cleanup. Solo tiles without pawns flip back to Standard side.</li>
+          <li><strong>Action Pawns:</strong> Can be used twice per round: first placement on tile, then spend 1 Food/Gold to move to an adjacent tile in the circle and exhaust.</li>
+          <li><strong>Goods vs. Resources:</strong> Gold substitutes for any 1 resource, but cannot be assigned to cards requiring a named resource. Gold is worth 1 VP at game end.</li>
+        </ul>
+        <h3>Expedition Rules</h3>
+        <ul>
+          <li><strong>Nearby Islands:</strong> Can be visited without fish.</li>
+          <li><strong>Distant Islands:</strong> Requires 1 Fish assigned to the ship.</li>
+          <li><strong>Pillaging:</strong> Gain goods in red banner; discard island.</li>
+          <li><strong>Conquering:</strong> Requires 1 Raze token assigned to the ship. Island becomes a location in your Empire (worth 1 VP at end, plus card ability).</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="btn-dismiss-rules">Got it</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
